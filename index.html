@@ -32,13 +32,21 @@
 
         /* --- NUOVO STILE PER LE FOTO SOPRA IL TITOLO --- */
         .foto-slideshow-sopra {
-            width: 100%; /* Occupa tutta la larghezza del contenuto centrale */
-            height: 250px; /* Altezza fissa per lo slideshow, regolabile */
-            margin-bottom: 20px; /* Spazio sotto lo slideshow */
-            position: relative; /* Per posizionare le immagini all'interno */
-            overflow: hidden; /* Nasconde le immagini fuori dal contenitore */
-            border-radius: 8px; /* Bordi leggermente arrotondati, opzionale */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Leggera ombreggiatura, opzionale */
+            width: 100%;
+        /* Rimuoviamo l'altezza fissa (height: 250px;) */
+    
+        /* Calcoliamo l'altezza perfetta per il formato 4:3.
+           In una foto 4:3, l'altezza è esattamente il 75% della larghezza.
+           (3 diviso 4 = 0.75, ovvero 75%).
+           Questo padding-top crea uno spazio vuoto proporzionato
+           che poi viene riempito dall'immagine. */
+            padding-top: 75%; /* 4:3 Aspect Ratio perfetta */
+    
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px; /* Opzionale, per arrotondare gli angoli */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Opzionale, per un'ombra leggera */
         }
 
         .foto-slideshow-sopra div {
@@ -82,8 +90,8 @@
         <div class="contenuto-centrale">
             
             <div class="foto-slideshow-sopra">
-                <div style="background-image: url('foto1.jpeg');"></div>
-                <div style="background-image: url('foto2.jpeg');"></div>
+                <div style="background-image: url('Foto1.jpeg');"></div>
+                <div style="background-image: url('Foto2.jpeg');"></div>
             </div>
             <h1>Jose & Alessia</h1>
             <p>Vi preghiamo di confermare la vostra presenza.</p>
