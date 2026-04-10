@@ -1,1 +1,161 @@
-<h1>Sito in costruzione... Torna presto!</h1>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Nostro Matrimonio - Jose & Alessia</title>
+    <style>
+        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; }
+        
+        /* Sfondo Dinamico */
+        .background-slideshow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .background-slideshow div { position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 1s ease-in-out; }
+        
+        /* Contenitore a TUTTO SCHERMO */
+        .container { 
+            width: 100%; 
+            min-height: 100vh; /* Occupa il 100% dell'altezza visibile */
+            margin: 0; 
+            padding: 40px 20px; 
+            box-sizing: border-box; 
+            background: rgba(255, 255, 255, 0.85); /* Trasparenza all'85% estesa su tutto lo schermo */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centra il contenuto in verticale */
+            align-items: center; /* Centra il contenuto in orizzontale */
+        }
+
+        /* Blocco centrale (evita che il form si allarghi troppo su schermi grandi) */
+        .contenuto-centrale {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 { color: #6b8e23; text-align: center; margin-top: 0; }
+        p { text-align: center; margin-bottom: 20px; }
+
+        /* Bottoni Navigazione (Tabs) */
+        .nav-buttons { display: flex; justify-content: space-around; gap: 10px; margin-bottom: 25px; }
+        .nav-btn { background-color: #e0e0e0; color: #333; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; flex: 1; transition: 0.3s; }
+        .nav-btn.attivo { background-color: #6b8e23; color: white; } 
+
+        /* Form e Sezioni */
+        form { text-align: left; width: 100%; }
+        .sezione-form { display: none; flex-direction: column; gap: 15px; } 
+        .sezione-form.attiva { display: flex; } 
+
+        label { font-weight: bold; margin-bottom: -5px; }
+        input, select, textarea { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; width: 100%; box-sizing: border-box; }
+        
+        /* Bottoni Invio/Reset */
+        .bottoni-azione { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; }
+        button.btn-submit { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #6b8e23; color: white; font-weight: bold; }
+        button.btn-reset { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #e0e0e0; color: #333; }
+        
+        #messaggio-successo { display: none; margin-top: 20px; padding: 15px; background-color: #d4edda; color: #155724; border-radius: 6px; font-weight: bold; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="background-slideshow">
+        <div style="background-image: url('Foto1.jpg');"></div>
+        <div style="background-image: url('Foto2.jpg');"></div>
+    </div>
+
+    <div class="container">
+        <div class="contenuto-centrale">
+            <h1>Jose & Alessia</h1>
+            <p>Vi preghiamo di confermare la vostra presenza.</p>
+
+            <div class="nav-buttons">
+                <button type="button" class="nav-btn attivo" onclick="cambiaScheda('sezione-partecipazione', this)">Partecipazione</button>
+                <button type="button" class="nav-btn" onclick="cambiaScheda('sezione-bambini', this)">Bambini</button>
+                <button type="button" class="nav-btn" onclick="cambiaScheda('sezione-allergie', this)">Allergie</button>
+            </div>
+
+            <form id="rsvpForm">
+                
+                <div id="sezione-partecipazione" class="sezione-form attiva">
+                    <label for="nome">Nome e Cognome:</label>
+                    <input type="text" id="nome" name="Nome" required placeholder="Es. Mario Rossi">
+
+                    <label for="presenza">Potrete partecipare?</label>
+                    <select id="presenza" name="Presenza" required>
+                        <option value="" disabled selected>Scegli un'opzione...</option>
+                        <option value="Sì">Sì, festeggeremo con voi!</option>
+                        <option value="No">No, purtroppo non potremo esserci</option>
+                    </select>
+                </div>
+
+                <div id="sezione-bambini" class="sezione-form">
+                    <label for="bambini">Quanti bambini ci saranno con voi?</label>
+                    <input type="number" id="bambini" name="Numero_Bambini" min="0" value="0">
+                </div>
+
+                <div id="sezione-allergie" class="sezione-form">
+                    <label for="allergie">Intolleranze o menù speciali:</label>
+                    <textarea id="allergie" name="Allergie" rows="3" placeholder="Es. Celiachia, vegano..."></textarea>
+                </div>
+
+                <div class="bottoni-azione">
+                    <button type="submit" class="btn-submit">Invia Conferma</button>
+                    <button type="reset" id="btnClear" class="btn-reset">Svuota modulo</button>
+                </div>
+                
+            </form>
+
+            <div id="messaggio-successo">Grazie! La tua conferma è stata inviata.</div>
+        </div>
+    </div>
+
+    <script>
+        function cambiaScheda(idScheda, bottoneCliccato) {
+            document.querySelectorAll('.sezione-form').forEach(sezione => {
+                sezione.classList.remove('attiva');
+            });
+            document.getElementById(idScheda).classList.add('attiva');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('attivo');
+            });
+            bottoneCliccato.classList.add('attivo');
+        }
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbx1Vpd07wUeac1QuflbkhRl39eiQv1fEIEZLzeoF_EC1n7F3zNTHhMzRNeZDawbDG3Fow/exec'; // Inserisci il link Google corretto
+        const form = document.getElementById('rsvpForm');
+        const messaggioSuccesso = document.getElementById('messaggio-successo');
+        const btnSubmit = document.querySelector('.btn-submit');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault(); 
+            btnSubmit.innerText = 'Invio in corso...';
+            btnSubmit.disabled = true;
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    messaggioSuccesso.style.display = 'block';
+                    form.reset();
+                    btnSubmit.innerText = 'Invia Conferma';
+                    btnSubmit.disabled = false;
+                })
+                .catch(error => {
+                    alert("C'è stato un errore, riprova!");
+                    btnSubmit.innerText = 'Invia Conferma';
+                    btnSubmit.disabled = false;
+                });
+        });
+
+        const slides = document.querySelectorAll('.background-slideshow div');
+        if(slides.length > 0) {
+            let currentSlide = 0;
+            slides[0].style.opacity = 1;
+            setInterval(() => {
+                slides[currentSlide].style.opacity = 0;
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].style.opacity = 1;
+            }, 5000);
+        }
+    </script>
+
+</body>
+</html>
