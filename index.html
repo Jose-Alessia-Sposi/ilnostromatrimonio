@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il Nostro Matrimonio - Jose & Alessia</title>
     <style>
-        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; background-color: #f4f7f6; }
+        /* --- STILE GENERALE CON NUOVA PALETTE AUTUNNALE --- */
+        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4e342e; /* Colore testo Caffè Scuro */ background-color: #fdfdf0; /* Colore sfondo pagina Crema */ }
         
         .container { 
             width: 100%; 
@@ -13,7 +14,7 @@
             margin: 0; 
             padding: 40px 20px; 
             box-sizing: border-box; 
-            background: #fff; 
+            background: #ffffff; /* Sfondo modulo bianco puro */
             display: flex;
             flex-direction: column;
             justify-content: center; 
@@ -28,15 +29,23 @@
             align-items: center; 
         }
 
+        /* --- STILE PER LE FOTO SOPRA IL TITOLO (NON TAGLIATE 4:3) --- */
         .foto-slideshow-sopra {
             width: 100%;
-            padding-top: 75%; /* Formato 4:3 */
+            /* Togliamo l'altezza fissa: height: 250px; */
+            
+            /* Calcoliamo l'altezza proporzionale perfetta per il formato 4:3.
+               (3 diviso 4 = 0.75, ovvero 75%).
+               Questo padding-top crea uno spazio vuoto proporzionato
+               che poi viene riempito dall'immagine. */
+            padding-top: 75%; /* Proporzioni 4:3 perfette */
+            
             margin-bottom: 20px;
             position: relative;
             overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            background-color: #eee;
+            border-radius: 8px; /* Opzionale, per arrotondare gli angoli */
+            box-shadow: 0 2px 10px rgba(78,52,46,0.1); /* Ombra leggera color caffè */
+            background-color: #fdfdf0; /* Crema chiaro se l'immagine tarda a caricare */
         }
 
         .foto-slideshow-sopra div {
@@ -47,13 +56,14 @@
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0; 
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1.5s ease-in-out; /* Transizione fluida */
         }
+        /* ------------------------------------------------------------- */
 
-        h1 { color: #6b8e23; text-align: center; margin-top: 0; }
-        p { text-align: center; margin-bottom: 20px; }
+        h1 { color: #c98a7a; /* Colore titolo Terracotta */ text-align: center; margin-top: 0; }
+        p { text-align: center; margin-bottom: 20px; color: #5d4037; /* Colore testo Caffè chiaro */ }
 
-        /* Bottoni Navigazione - Aggiornati per 4 bottoni */
+        /* Bottoni Navigazione - Aggiornati per 4 bottoni e nuovi colori */
         .nav-buttons { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
@@ -61,21 +71,21 @@
             margin-bottom: 25px; 
             width: 100%; 
         }
-        .nav-btn { background-color: #e0e0e0; color: #333; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 13px; }
-        .nav-btn.attivo { background-color: #6b8e23; color: white; } 
+        .nav-btn { background-color: #e8dcca; /* Sfondo bottone inattivo Beige Muto */ color: #4e342e; /* Testo Caffè scuro */ padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 13px; }
+        .nav-btn.attivo { background-color: #c98a7a; /* Sfondo bottone attivo Terracotta */ color: white; } 
 
         form { text-align: left; width: 100%; }
         .sezione-form { display: none; flex-direction: column; gap: 15px; } 
         .sezione-form.attiva { display: flex; } 
 
-        label { font-weight: bold; margin-bottom: -5px; }
-        input, select, textarea { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; width: 100%; box-sizing: border-box; }
+        label { font-weight: bold; margin-bottom: -5px; color: #4e342e; /* Testo Caffè scuro */ }
+        input, select, textarea { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; width: 100%; box-sizing: border-box; background-color: #fff; color: #4e342e; }
         
         .bottoni-azione { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; }
-        button.btn-submit { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #6b8e23; color: white; font-weight: bold; width: 100%; }
-        button.btn-reset { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #e0e0e0; color: #333; width: 100%; }
+        button.btn-submit { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #c98a7a; /* Bottone invio Terracotta */ color: white; font-weight: bold; width: 100%; }
+        button.btn-reset { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #e8dcca; /* Bottone reset Beige */ color: #4e342e; width: 100%; }
         
-        #messaggio-successo { display: none; margin-top: 20px; padding: 15px; background-color: #d4edda; color: #155724; border-radius: 6px; font-weight: bold; text-align: center; }
+        #messaggio-successo { display: none; margin-top: 20px; padding: 15px; background-color: #d8c2b5; /* Sfondo successo Terracotta chiaro */ color: #5d4037; /* Testo successo Caffè */ border-radius: 6px; font-weight: bold; text-align: center; }
     </style>
 </head>
 <body>
@@ -113,8 +123,8 @@
                 </div>
 
                 <div id="sezione-adulti" class="sezione-form">
-                    <label for="famiglia">Quanti adulti sarete in totale?</label>
-                    <input type="number" id="famiglia" name="Adulti" min="1" value="1">
+                    <label for="adulti">Quanti adulti sarete in totale?</label>
+                    <input type="number" id="adulti" name="Adulti" min="1" value="1">
                     <p style="font-size: 12px; color: #666; text-align: left; margin-top: 5px;">Indica il numero totale di adulti (compreso te).</p>
                 </div>
 
@@ -152,6 +162,7 @@
             bottoneCliccato.classList.add('attivo');
         }
 
+        // --- URL GOOGLE APPS SCRIPT CORRETTO E PRESERVATO ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbx1Vpd07wUeac1QuflbkhRl39eiQv1fEIEZLzeoF_EC1n7F3zNTHhMzRNeZDawbDG3Fow/exec';
         const form = document.getElementById('rsvpForm');
         const messaggioSuccesso = document.getElementById('messaggio-successo');
@@ -176,11 +187,13 @@
                 });
         });
 
+        // --- LOGICA SLIDESHOW CORRETTA E PRESERVATA ---
         window.onload = function() {
             const slides = document.querySelectorAll('.foto-slideshow-sopra div');
             if(slides.length > 0) {
                 let currentSlide = 0;
-                slides[0].style.opacity = 1;
+                slides[0].style.opacity = 1; // Forza la prima slide a essere visibile subito
+                
                 setInterval(() => {
                     slides[currentSlide].style.opacity = 0;
                     currentSlide = (currentSlide + 1) % slides.length;
