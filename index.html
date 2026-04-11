@@ -36,7 +36,7 @@
             overflow: hidden;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            background-color: #eee; /* Grigio chiaro se l'immagine tarda a caricare */
+            background-color: #eee;
         }
 
         .foto-slideshow-sopra div {
@@ -47,14 +47,21 @@
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0; 
-            transition: opacity 1.5s ease-in-out; /* Transizione più fluida */
+            transition: opacity 1.5s ease-in-out;
         }
 
         h1 { color: #6b8e23; text-align: center; margin-top: 0; }
         p { text-align: center; margin-bottom: 20px; }
 
-        .nav-buttons { display: flex; justify-content: space-around; gap: 10px; margin-bottom: 25px; width: 100%; }
-        .nav-btn { background-color: #e0e0e0; color: #333; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; flex: 1; transition: 0.3s; }
+        /* Bottoni Navigazione - Aggiornati per 4 bottoni */
+        .nav-buttons { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+            margin-bottom: 25px; 
+            width: 100%; 
+        }
+        .nav-btn { background-color: #e0e0e0; color: #333; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 13px; }
         .nav-btn.attivo { background-color: #6b8e23; color: white; } 
 
         form { text-align: left; width: 100%; }
@@ -86,11 +93,13 @@
 
             <div class="nav-buttons">
                 <button type="button" class="nav-btn attivo" onclick="cambiaScheda('sezione-partecipazione', this)">Partecipazione</button>
+                <button type="button" class="nav-btn" onclick="cambiaScheda('sezione-famiglia', this)">Famiglia</button>
                 <button type="button" class="nav-btn" onclick="cambiaScheda('sezione-bambini', this)">Bambini</button>
                 <button type="button" class="nav-btn" onclick="cambiaScheda('sezione-allergie', this)">Allergie</button>
             </div>
 
             <form id="rsvpForm">
+                
                 <div id="sezione-partecipazione" class="sezione-form attiva">
                     <label for="nome">Nome e Cognome:</label>
                     <input type="text" id="nome" name="Nome" required placeholder="Es. Mario Rossi">
@@ -103,8 +112,14 @@
                     </select>
                 </div>
 
+                <div id="sezione-famiglia" class="sezione-form">
+                    <label for="famiglia">Quanti siete in totale in famiglia?</label>
+                    <input type="number" id="famiglia" name="Totale_Famiglia" min="1" value="1">
+                    <p style="font-size: 12px; color: #666; text-align: left; margin-top: 5px;">Indica il numero totale di adulti (compreso te).</p>
+                </div>
+
                 <div id="sezione-bambini" class="sezione-form">
-                    <label for="bambini">Quanti bambini ci saranno con voi?</label>
+                    <label for="bambini">Quanti bambini (sotto i 12 anni)?</label>
                     <input type="number" id="bambini" name="Numero_Bambini" min="0" value="0">
                 </div>
 
@@ -117,6 +132,7 @@
                     <button type="submit" class="btn-submit">Invia Conferma</button>
                     <button type="reset" id="btnClear" class="btn-reset">Svuota modulo</button>
                 </div>
+                
             </form>
 
             <div id="messaggio-successo">Grazie! La tua conferma è stata inviata.</div>
@@ -129,6 +145,7 @@
                 sezione.classList.remove('attiva');
             });
             document.getElementById(idScheda).classList.add('attiva');
+            
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('attivo');
             });
@@ -159,14 +176,11 @@
                 });
         });
 
-        // LOGICA SLIDESHOW CORRETTA
         window.onload = function() {
             const slides = document.querySelectorAll('.foto-slideshow-sopra div');
             if(slides.length > 0) {
                 let currentSlide = 0;
-                // Forza la prima slide a essere visibile subito
                 slides[0].style.opacity = 1;
-                
                 setInterval(() => {
                     slides[currentSlide].style.opacity = 0;
                     currentSlide = (currentSlide + 1) % slides.length;
@@ -175,5 +189,6 @@
             }
         };
     </script>
+
 </body>
 </html>
