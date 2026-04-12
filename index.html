@@ -4,15 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il Nostro Matrimonio - Jose & Alessia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
     <style>
-        /* --- STILE GENERALE CON PALETTE AUTUNNALE --- */
+        /* --- STILE GENERALE E PALETTE AUTUNNALE --- */
         body, html { height: 100%; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4e342e; background-color: #fdfdf0; overflow-x: hidden; }
         
+        /* --- NUOVA BARRA SUPERIORE (HEADER) FIX OVERLAP --- */
+        .top-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 60px;
+            background-color: #fdfdf0; /* Sfondo Crema */
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            box-shadow: 0 2px 10px rgba(78,52,46,0.1); /* Ombra leggera */
+            z-index: 1000; /* Sta sempre sopra a tutto il resto */
+            justify-content: space-between;
+        }
+
+        .titolo-header { font-size: 20px; font-weight: bold; color: #c98a7a; margin-left: 10px; }
+
+        .menu-btn { 
+            font-size: 20px; 
+            cursor: pointer; 
+            background-color: #e8dcca; 
+            color: #4e342e; 
+            padding: 8px 15px; 
+            border: none;
+            border-radius: 6px; 
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .menu-btn:hover { background-color: #c98a7a; color: white; }
+
+        /* --- CONTENITORE PRINCIPALE --- */
         .container { 
             width: 100%; 
             min-height: 100vh; 
             margin: 0; 
-            padding: 60px 20px 40px 20px; /* Spazio extra in alto per il bottone menu */
+            padding: 80px 20px 40px 20px; /* 80px in alto per non finire sotto l'header */
             box-sizing: border-box; 
             background: #ffffff; 
             display: flex;
@@ -33,63 +64,39 @@
             height: 100%; 
             width: 250px; 
             position: fixed; 
-            z-index: 2000; /* Sopra a tutto */
+            z-index: 2000; 
             top: 0; 
-            left: -250px; /* Nascosto fuori dallo schermo a sinistra */
-            background-color: #fdfdf0; /* Sfondo Crema */
+            left: -250px; 
+            background-color: #fdfdf0; 
             overflow-x: hidden; 
-            transition: 0.4s ease; /* Animazione di apertura fluida */
+            transition: 0.4s ease; 
             padding-top: 60px;
             box-shadow: 2px 0 10px rgba(78,52,46,0.2);
             border-right: 2px solid #c98a7a;
         }
 
-        .sidebar.aperto { left: 0; } /* Classe che viene aggiunta da JS per aprire */
+        .sidebar.aperto { left: 0; }
 
         .sidebar a {
             padding: 15px 25px; 
             text-decoration: none; 
-            font-size: 18px; 
+            font-size: 16px; 
             color: #4e342e; 
             display: block; 
             transition: 0.3s;
-            font-weight: bold;
+            font-weight: 500;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.5px;
         }
-
         .sidebar a:hover { background-color: #e8dcca; color: #c98a7a; }
 
-        .sidebar .chiudi-btn {
-            position: absolute; 
-            top: 10px; 
-            right: 20px; 
-            font-size: 36px; 
-            padding: 0;
-        }
+        .sidebar .chiudi-btn { position: absolute; top: 10px; right: 20px; font-size: 36px; padding: 0; }
+        .titolo-menu { padding: 10px 25px; font-size: 13px; color: #c98a7a; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; }
 
-        /* Testo divisorio nel menu */
-        .titolo-menu { padding: 10px 25px; font-size: 14px; color: #c98a7a; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; }
-
-        /* --- BOTTONE MENU HAMBURGER --- */
-        .menu-btn { 
-            position: fixed; 
-            top: 15px; 
-            left: 15px; 
-            font-size: 24px; 
-            cursor: pointer; 
-            background-color: #e8dcca; 
-            color: #4e342e; 
-            padding: 8px 12px; 
-            border-radius: 6px; 
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: 0.3s;
-        }
-        .menu-btn:hover { background-color: #c98a7a; color: white; }
-
-        /* --- STILE PER LE FOTO (4:3 CONTAIN) --- */
+        /* --- STILE FOTO E TESTI --- */
         .foto-slideshow-sopra {
             width: 100%;
-            padding-top: 75%; 
+            padding-top: 75%; /* Proporzioni 4:3 */
             margin-bottom: 20px;
             position: relative;
             overflow: hidden;
@@ -99,71 +106,91 @@
         }
 
         .foto-slideshow-sopra div {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-size: contain; /* Garantisce che la foto non sia MAI tagliata */
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: contain; /* Foto mai tagliata */
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0; 
             transition: opacity 1.5s ease-in-out; 
         }
 
-        h1 { color: #c98a7a; text-align: center; margin-top: 0; font-size: 32px; }
-        p { text-align: center; margin-bottom: 20px; color: #5d4037; }
+        h1 { 
+            color: #c98a7a; /* Colore Terracotta */ 
+            text-align: center; 
+            margin-top: 0; 
+            font-size: 42px; /* Ingrandiamo un po' perché il corsivo veste piccolo */
+            font-family: 'Dancing Script', cursive; /* ECCO IL NUOVO FONT ELEGANTE! */
+            font-weight: 700; /* Lo rende un po' più in grassetto */
+        }
+        p { text-align: center; margin-bottom: 20px; color: #5d4037; line-height: 1.5; }
 
-        /* --- STILE FORM E BOTTONI AZIONE --- */
-        form { text-align: left; width: 100%; }
-        .sezione-form { display: none; flex-direction: column; gap: 15px; animation: fadeIn 0.5s; } 
-        .sezione-form.attiva { display: flex; } 
-
+        /* --- GESTIONE PAGINE (SEZIONI) --- */
+        .sezione-pagina { display: none; width: 100%; animation: fadeIn 0.4s; } 
+        .sezione-pagina.attiva { display: block; } 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        label { font-weight: bold; margin-bottom: -5px; color: #4e342e; }
+        /* --- STILE FORM --- */
+        form { text-align: left; width: 100%; }
+        label { font-weight: bold; margin-bottom: 5px; color: #4e342e; display: block; margin-top: 15px;}
         input, select, textarea { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; width: 100%; box-sizing: border-box; background-color: #fff; color: #4e342e; }
         
         .bottoni-azione { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; }
-        button.btn-submit { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #c98a7a; color: white; font-weight: bold; width: 100%; transition: 0.3s; }
-        button.btn-submit:hover { background-color: #b07464; }
-        button.btn-reset { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #e8dcca; color: #4e342e; width: 100%; }
+        button.btn-azione { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; transition: 0.3s; }
+        .btn-primario { background-color: #c98a7a; color: white; }
+        .btn-primario:hover { background-color: #b07464; }
+        .btn-secondario { background-color: #e8dcca; color: #4e342e; }
         
         #messaggio-successo { display: none; margin-top: 20px; padding: 15px; background-color: #d8c2b5; color: #5d4037; border-radius: 6px; font-weight: bold; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div class="menu-btn" onclick="apriMenu()">&#9776; Menu</div>
+    <div class="top-header">
+        <button class="menu-btn" onclick="apriMenu()">&#9776; Menu</button>
+        <div class="titolo-header">&hearts; 11 Ottobre 2026 &hearts;</div>
+    </div>
 
     <div id="mioMenu" class="sidebar">
         <a href="javascript:void(0)" class="chiudi-btn" onclick="chiudiMenu()">&times;</a>
         
+        <a href="#" onclick="cambiaPagina('pagina-home')">&hearts; Home</a>
+        
         <div class="titolo-menu">Modulo Conferma</div>
-        <a href="#" onclick="cambiaScheda('sezione-partecipazione'); chiudiMenu()">Partecipazione</a>
-        <a href="#" onclick="cambiaScheda('sezione-adulti'); chiudiMenu()">Adulti</a>
-        <a href="#" onclick="cambiaScheda('sezione-bambini'); chiudiMenu()">Bambini</a>
-        <a href="#" onclick="cambiaScheda('sezione-allergie'); chiudiMenu()">Allergie</a>
+        <a href="#" onclick="cambiaPagina('pagina-partecipazione')">1. Partecipazione</a>
+        <a href="#" onclick="cambiaPagina('pagina-adulti')">2. Adulti</a>
+        <a href="#" onclick="cambiaPagina('pagina-bambini')">3. Bambini</a>
+        <a href="#" onclick="cambiaPagina('pagina-allergie')">4. Allergie</a>
         
         <hr style="border-top: 1px solid #d8c2b5; margin: 15px 20px;">
         
-        <div class="titolo-menu">Altre Info</div>
-        <a href="location.html">La Location</a>
-        <a href="regalo.html">Lista Nozze</a>
+        <div class="titolo-menu">Altre Informazioni</div>
+        <a href="#" onclick="cambiaPagina('pagina-location')"> La Location</a>
+        <a href="#" onclick="cambiaPagina('pagina-regalo')"> Lista Nozze</a>
     </div>
 
     <div class="container">
         <div class="contenuto-centrale">
-            
-            <div class="foto-slideshow-sopra">
-                <div style="background-image: url('Foto1.jpeg');"></div>
-                <div style="background-image: url('Foto2.jpeg');"></div>
+
+            <div id="pagina-home" class="sezione-pagina attiva">
+                
+                <div class="foto-slideshow-sopra">
+                    <div style="background-image: url('Foto1.jpeg');"></div>
+                    <div style="background-image: url('Foto2.jpeg');"></div>
+                </div>
+
+                <h1>Jose & Alessia</h1>
+                <p>Siamo felicissimi di invitarvi a celebrare con noi il giorno del nostro matrimonio! <br><br> In questo sito troverete tutte le informazioni necessarie.</p>
+                
+                <button class="btn-azione btn-primario" onclick="cambiaPagina('pagina-partecipazione')">Conferma la tua presenza</button>
             </div>
 
-            <h1 id="titolo-sezione">Partecipazione</h1>
-            <p>Vi preghiamo di confermare la vostra presenza.</p>
 
             <form id="rsvpForm">
                 
-                <div id="sezione-partecipazione" class="sezione-form attiva">
+                <div id="pagina-partecipazione" class="sezione-pagina">
+                    <h1>Partecipazione</h1>
+                    <p>Compila i campi qui sotto per farci sapere se ci sarai.</p>
+                    
                     <label for="nome">Nome e Cognome:</label>
                     <input type="text" id="nome" name="Nome" required placeholder="Es. Mario Rossi">
 
@@ -173,69 +200,98 @@
                         <option value="Sì">Sì, festeggeremo con voi!</option>
                         <option value="No">No, purtroppo non potremo esserci</option>
                     </select>
+
+                    <div class="bottoni-azione">
+                        <button type="button" class="btn-azione btn-secondario" onclick="cambiaPagina('pagina-adulti')">Avanti ➔</button>
+                    </div>
                 </div>
 
-                <div id="sezione-adulti" class="sezione-form">
+                <div id="pagina-adulti" class="sezione-pagina">
+                    <h1>Adulti</h1>
                     <label for="adulti">Quanti adulti sarete in totale?</label>
                     <input type="number" id="adulti" name="Adulti" min="1" value="1">
-                    <p style="font-size: 12px; color: #666; text-align: left; margin-top: 5px;">Indica il numero totale di adulti (compreso te).</p>
+                    <p style="font-size: 12px; text-align: left;">Indica il numero totale di adulti (compreso te).</p>
+                    
+                    <div class="bottoni-azione">
+                        <button type="button" class="btn-azione btn-secondario" onclick="cambiaPagina('pagina-bambini')">Avanti ➔</button>
+                    </div>
                 </div>
 
-                <div id="sezione-bambini" class="sezione-form">
+                <div id="pagina-bambini" class="sezione-pagina">
+                    <h1>Bambini</h1>
                     <label for="bambini">Quanti bambini (sotto i 12 anni)?</label>
                     <input type="number" id="bambini" name="Numero_Bambini" min="0" value="0">
+
+                    <div class="bottoni-azione">
+                        <button type="button" class="btn-azione btn-secondario" onclick="cambiaPagina('pagina-allergie')">Avanti ➔</button>
+                    </div>
                 </div>
 
-                <div id="sezione-allergie" class="sezione-form">
-                    <label for="allergie">Intolleranze o menù speciali:</label>
+                <div id="pagina-allergie" class="sezione-pagina">
+                    <h1>Allergie</h1>
+                    <label for="allergie">Intolleranze:</label>
                     <textarea id="allergie" name="Allergie" rows="3" placeholder="Es. Celiachia, vegano..."></textarea>
+
+                    <div class="bottoni-azione">
+                        <button type="submit" id="btnSubmit" class="btn-azione btn-primario">Invia Conferma Definitiva</button>
+                    </div>
                 </div>
 
-                <div class="bottoni-azione">
-                    <button type="submit" class="btn-submit">Invia Conferma Completa</button>
-                    <button type="reset" id="btnClear" class="btn-reset">Svuota modulo</button>
-                </div>
-                
             </form>
 
-            <div id="messaggio-successo">Grazie! La tua conferma è stata inviata con successo.</div>
+            <div id="messaggio-successo">Grazie! La tua conferma è stata registrata.</div>
+
+
+            <div id="pagina-location" class="sezione-pagina">
+                <h1>La Location</h1>
+                <p>Non vediamo l'ora di festeggiare con voi presso il meraviglioso <strong>Antico Casale dei Mascioni</strong>.</p>
+                
+                <div style="width: 100%; padding-top: 56.25%; background-color: #e8dcca; border-radius: 8px; margin-bottom: 20px; background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=500'); background-size: cover; background-position: center;"></div>
+
+                <p style="font-size: 14px;">Via Mascioni, Castel Campagnano (CE)</p>
+
+                <div class="bottoni-azione">
+                    <a href="https://casaledeimascioni.it/la-location/" target="_blank" style="text-decoration: none;">
+                        <button type="button" class="btn-azione btn-secondario">Visita il sito della Location ➔</button>
+                    </a>
+                </div>
+            </div>
+
+            <div id="pagina-regalo" class="sezione-pagina">
+                <h1>Lista Nozze</h1>
+                <p>Il regalo più grande è la vostra presenza. Tuttavia, se desiderate farci un pensiero...</p>
+                <p><strong>IBAN:</strong> IT12A345678901234567890</p>
+            </div>
+
         </div>
     </div>
 
     <script>
-        // --- LOGICA MENU A SCOMPARSA ---
-        function apriMenu() {
-            document.getElementById("mioMenu").classList.add("aperto");
-        }
+        // --- LOGICA MENU LATERALE ---
+        function apriMenu() { document.getElementById("mioMenu").classList.add("aperto"); }
+        function chiudiMenu() { document.getElementById("mioMenu").classList.remove("aperto"); }
 
-        function chiudiMenu() {
-            document.getElementById("mioMenu").classList.remove("aperto");
-        }
-
-        // --- LOGICA CAMBIO SEZIONE E TITOLO ---
-        function cambiaScheda(idScheda) {
-            // Nasconde tutte le sezioni
-            document.querySelectorAll('.sezione-form').forEach(sezione => {
-                sezione.classList.remove('attiva');
+        // --- LOGICA CAMBIO PAGINE ---
+        function cambiaPagina(idPagina) {
+            // 1. Nasconde tutte le pagine
+            document.querySelectorAll('.sezione-pagina').forEach(pagina => {
+                pagina.classList.remove('attiva');
             });
-            // Mostra quella selezionata
-            document.getElementById(idScheda).classList.add('attiva');
-            
-            // Cambia il titolo H1 in base alla sezione
-            let nuovoTitolo = "";
-            if(idScheda === 'sezione-partecipazione') nuovoTitolo = "Partecipazione";
-            if(idScheda === 'sezione-adulti') nuovoTitolo = "Dettagli Adulti";
-            if(idScheda === 'sezione-bambini') nuovoTitolo = "Dettagli Bambini";
-            if(idScheda === 'sezione-allergie') nuovoTitolo = "Allergie e Menù";
-            
-            document.getElementById('titolo-sezione').innerText = nuovoTitolo;
+            // 2. Mostra la pagina richiesta
+            document.getElementById(idPagina).classList.add('attiva');
+            // 3. Nasconde il messaggio di successo se si naviga via
+            document.getElementById('messaggio-successo').style.display = 'none';
+            // 4. Chiude il menu laterale in automatico
+            chiudiMenu();
+            // 5. Riporta la visuale in cima alla pagina
+            window.scrollTo(0, 0);
         }
 
         // --- LOGICA INVIO GOOGLE FOGLI ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbx1Vpd07wUeac1QuflbkhRl39eiQv1fEIEZLzeoF_EC1n7F3zNTHhMzRNeZDawbDG3Fow/exec';
         const form = document.getElementById('rsvpForm');
         const messaggioSuccesso = document.getElementById('messaggio-successo');
-        const btnSubmit = document.querySelector('.btn-submit');
+        const btnSubmit = document.getElementById('btnSubmit');
 
         form.addEventListener('submit', e => {
             e.preventDefault(); 
@@ -244,27 +300,26 @@
 
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
-                    messaggioSuccesso.style.display = 'block';
                     form.reset();
-                    btnSubmit.innerText = 'Invia Conferma Completa';
+                    btnSubmit.innerText = 'Invia Conferma Definitiva';
                     btnSubmit.disabled = false;
-                    // Ritorna alla prima schermata dopo l'invio
-                    cambiaScheda('sezione-partecipazione'); 
+                    // Mostra il messaggio di successo e nasconde il form
+                    cambiaPagina('pagina-home');
+                    messaggioSuccesso.style.display = 'block';
                 })
                 .catch(error => {
                     alert("C'è stato un errore, riprova!");
-                    btnSubmit.innerText = 'Invia Conferma Completa';
+                    btnSubmit.innerText = 'Invia Conferma Definitiva';
                     btnSubmit.disabled = false;
                 });
         });
 
-        // --- LOGICA FOTO SLIDESHOW (CON 'CONTAIN') ---
+        // --- LOGICA FOTO SLIDESHOW ---
         window.onload = function() {
             const slides = document.querySelectorAll('.foto-slideshow-sopra div');
             if(slides.length > 0) {
                 let currentSlide = 0;
                 slides[0].style.opacity = 1;
-                
                 setInterval(() => {
                     slides[currentSlide].style.opacity = 0;
                     currentSlide = (currentSlide + 1) % slides.length;
