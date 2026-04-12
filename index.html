@@ -5,19 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il Nostro Matrimonio - Jose & Alessia</title>
     <style>
-        /* --- STILE GENERALE CON NUOVA PALETTE AUTUNNALE --- */
-        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4e342e; /* Colore testo Caffè Scuro */ background-color: #fdfdf0; /* Colore sfondo pagina Crema */ }
+        /* --- STILE GENERALE CON PALETTE AUTUNNALE --- */
+        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4e342e; background-color: #fdfdf0; overflow-x: hidden; }
         
         .container { 
             width: 100%; 
             min-height: 100vh; 
             margin: 0; 
-            padding: 40px 20px; 
+            padding: 60px 20px 40px 20px; /* Spazio extra in alto per il bottone menu */
             box-sizing: border-box; 
-            background: #ffffff; /* Sfondo modulo bianco puro */
+            background: #ffffff; 
             display: flex;
             flex-direction: column;
-            justify-content: center; 
             align-items: center; 
         }
 
@@ -29,66 +28,127 @@
             align-items: center; 
         }
 
-        /* --- STILE PER LE FOTO SOPRA IL TITOLO (NON TAGLIATE 4:3) --- */
+        /* --- MENU LATERALE A SCOMPARSA (SIDEBAR) --- */
+        .sidebar {
+            height: 100%; 
+            width: 250px; 
+            position: fixed; 
+            z-index: 2000; /* Sopra a tutto */
+            top: 0; 
+            left: -250px; /* Nascosto fuori dallo schermo a sinistra */
+            background-color: #fdfdf0; /* Sfondo Crema */
+            overflow-x: hidden; 
+            transition: 0.4s ease; /* Animazione di apertura fluida */
+            padding-top: 60px;
+            box-shadow: 2px 0 10px rgba(78,52,46,0.2);
+            border-right: 2px solid #c98a7a;
+        }
+
+        .sidebar.aperto { left: 0; } /* Classe che viene aggiunta da JS per aprire */
+
+        .sidebar a {
+            padding: 15px 25px; 
+            text-decoration: none; 
+            font-size: 18px; 
+            color: #4e342e; 
+            display: block; 
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        .sidebar a:hover { background-color: #e8dcca; color: #c98a7a; }
+
+        .sidebar .chiudi-btn {
+            position: absolute; 
+            top: 10px; 
+            right: 20px; 
+            font-size: 36px; 
+            padding: 0;
+        }
+
+        /* Testo divisorio nel menu */
+        .titolo-menu { padding: 10px 25px; font-size: 14px; color: #c98a7a; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; }
+
+        /* --- BOTTONE MENU HAMBURGER --- */
+        .menu-btn { 
+            position: fixed; 
+            top: 15px; 
+            left: 15px; 
+            font-size: 24px; 
+            cursor: pointer; 
+            background-color: #e8dcca; 
+            color: #4e342e; 
+            padding: 8px 12px; 
+            border-radius: 6px; 
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+        .menu-btn:hover { background-color: #c98a7a; color: white; }
+
+        /* --- STILE PER LE FOTO (4:3 CONTAIN) --- */
         .foto-slideshow-sopra {
             width: 100%;
-            /* Togliamo l'altezza fissa: height: 250px; */
-            
-            /* Calcoliamo l'altezza proporzionale perfetta per il formato 4:3.
-               (3 diviso 4 = 0.75, ovvero 75%).
-               Questo padding-top crea uno spazio vuoto proporzionato
-               che poi viene riempito dall'immagine. */
-            padding-top: 75%; /* Proporzioni 4:3 perfette */
-            
+            padding-top: 75%; 
             margin-bottom: 20px;
             position: relative;
             overflow: hidden;
-            border-radius: 8px; /* Opzionale, per arrotondare gli angoli */
-            box-shadow: 0 2px 10px rgba(78,52,46,0.1); /* Ombra leggera color caffè */
-            background-color: #fdfdf0; /* Crema chiaro se l'immagine tarda a caricare */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(78,52,46,0.1); 
+            background-color: #fdfdf0; 
         }
 
         .foto-slideshow-sopra div {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background-size: contain;  /* <--- CAMBIA 'cover' CON 'contain' */
+            background-size: contain; /* Garantisce che la foto non sia MAI tagliata */
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0; 
-            transition: opacity 1.5s ease-in-out; /* Transizione fluida */
+            transition: opacity 1.5s ease-in-out; 
         }
-        /* ------------------------------------------------------------- */
 
-        h1 { color: #c98a7a; /* Colore titolo Terracotta */ text-align: center; margin-top: 0; }
-        p { text-align: center; margin-bottom: 20px; color: #5d4037; /* Colore testo Caffè chiaro */ }
+        h1 { color: #c98a7a; text-align: center; margin-top: 0; font-size: 32px; }
+        p { text-align: center; margin-bottom: 20px; color: #5d4037; }
 
-        /* Bottoni Navigazione - Aggiornati per 4 bottoni e nuovi colori */
-        .nav-buttons { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px; 
-            margin-bottom: 25px; 
-            width: 100%; 
-        }
-        .nav-btn { background-color: #e8dcca; /* Sfondo bottone inattivo Beige Muto */ color: #4e342e; /* Testo Caffè scuro */ padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 13px; }
-        .nav-btn.attivo { background-color: #c98a7a; /* Sfondo bottone attivo Terracotta */ color: white; } 
-
+        /* --- STILE FORM E BOTTONI AZIONE --- */
         form { text-align: left; width: 100%; }
-        .sezione-form { display: none; flex-direction: column; gap: 15px; } 
+        .sezione-form { display: none; flex-direction: column; gap: 15px; animation: fadeIn 0.5s; } 
         .sezione-form.attiva { display: flex; } 
 
-        label { font-weight: bold; margin-bottom: -5px; color: #4e342e; /* Testo Caffè scuro */ }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        label { font-weight: bold; margin-bottom: -5px; color: #4e342e; }
         input, select, textarea { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; width: 100%; box-sizing: border-box; background-color: #fff; color: #4e342e; }
         
         .bottoni-azione { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; }
-        button.btn-submit { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #c98a7a; /* Bottone invio Terracotta */ color: white; font-weight: bold; width: 100%; }
-        button.btn-reset { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #e8dcca; /* Bottone reset Beige */ color: #4e342e; width: 100%; }
+        button.btn-submit { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #c98a7a; color: white; font-weight: bold; width: 100%; transition: 0.3s; }
+        button.btn-submit:hover { background-color: #b07464; }
+        button.btn-reset { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; background-color: #e8dcca; color: #4e342e; width: 100%; }
         
-        #messaggio-successo { display: none; margin-top: 20px; padding: 15px; background-color: #d8c2b5; /* Sfondo successo Terracotta chiaro */ color: #5d4037; /* Testo successo Caffè */ border-radius: 6px; font-weight: bold; text-align: center; }
+        #messaggio-successo { display: none; margin-top: 20px; padding: 15px; background-color: #d8c2b5; color: #5d4037; border-radius: 6px; font-weight: bold; text-align: center; }
     </style>
 </head>
 <body>
+
+    <div class="menu-btn" onclick="apriMenu()">&#9776; Menu</div>
+
+    <div id="mioMenu" class="sidebar">
+        <a href="javascript:void(0)" class="chiudi-btn" onclick="chiudiMenu()">&times;</a>
+        
+        <div class="titolo-menu">Modulo Conferma</div>
+        <a href="#" onclick="cambiaScheda('sezione-partecipazione'); chiudiMenu()">Partecipazione</a>
+        <a href="#" onclick="cambiaScheda('sezione-adulti'); chiudiMenu()">Adulti</a>
+        <a href="#" onclick="cambiaScheda('sezione-bambini'); chiudiMenu()">Bambini</a>
+        <a href="#" onclick="cambiaScheda('sezione-allergie'); chiudiMenu()">Allergie</a>
+        
+        <hr style="border-top: 1px solid #d8c2b5; margin: 15px 20px;">
+        
+        <div class="titolo-menu">Altre Info</div>
+        <a href="location.html">La Location</a>
+        <a href="regalo.html">Lista Nozze</a>
+    </div>
 
     <div class="container">
         <div class="contenuto-centrale">
@@ -98,15 +158,8 @@
                 <div style="background-image: url('Foto2.jpeg');"></div>
             </div>
 
-            <h1>Jose & Alessia</h1>
+            <h1 id="titolo-sezione">Partecipazione</h1>
             <p>Vi preghiamo di confermare la vostra presenza.</p>
-
-            <div class="nav-buttons">
-                <button type="button" class="nav-btn attivo" onclick="cambiaScheda('sezione-partecipazione', this)">Partecipazione</button>
-                <button type="button" class="nav-btn" onclick="cambiaScheda('sezione-adulti', this)">Adulti</button>
-                <button type="button" class="nav-btn" onclick="cambiaScheda('sezione-bambini', this)">Bambini</button>
-                <button type="button" class="nav-btn" onclick="cambiaScheda('sezione-allergie', this)">Allergie</button>
-            </div>
 
             <form id="rsvpForm">
                 
@@ -139,30 +192,46 @@
                 </div>
 
                 <div class="bottoni-azione">
-                    <button type="submit" class="btn-submit">Invia Conferma</button>
+                    <button type="submit" class="btn-submit">Invia Conferma Completa</button>
                     <button type="reset" id="btnClear" class="btn-reset">Svuota modulo</button>
                 </div>
                 
             </form>
 
-            <div id="messaggio-successo">Grazie! La tua conferma è stata inviata.</div>
+            <div id="messaggio-successo">Grazie! La tua conferma è stata inviata con successo.</div>
         </div>
     </div>
 
     <script>
-        function cambiaScheda(idScheda, bottoneCliccato) {
+        // --- LOGICA MENU A SCOMPARSA ---
+        function apriMenu() {
+            document.getElementById("mioMenu").classList.add("aperto");
+        }
+
+        function chiudiMenu() {
+            document.getElementById("mioMenu").classList.remove("aperto");
+        }
+
+        // --- LOGICA CAMBIO SEZIONE E TITOLO ---
+        function cambiaScheda(idScheda) {
+            // Nasconde tutte le sezioni
             document.querySelectorAll('.sezione-form').forEach(sezione => {
                 sezione.classList.remove('attiva');
             });
+            // Mostra quella selezionata
             document.getElementById(idScheda).classList.add('attiva');
             
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('attivo');
-            });
-            bottoneCliccato.classList.add('attivo');
+            // Cambia il titolo H1 in base alla sezione
+            let nuovoTitolo = "";
+            if(idScheda === 'sezione-partecipazione') nuovoTitolo = "Partecipazione";
+            if(idScheda === 'sezione-adulti') nuovoTitolo = "Dettagli Adulti";
+            if(idScheda === 'sezione-bambini') nuovoTitolo = "Dettagli Bambini";
+            if(idScheda === 'sezione-allergie') nuovoTitolo = "Allergie e Menù";
+            
+            document.getElementById('titolo-sezione').innerText = nuovoTitolo;
         }
 
-        // --- URL GOOGLE APPS SCRIPT CORRETTO E PRESERVATO ---
+        // --- LOGICA INVIO GOOGLE FOGLI ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbx1Vpd07wUeac1QuflbkhRl39eiQv1fEIEZLzeoF_EC1n7F3zNTHhMzRNeZDawbDG3Fow/exec';
         const form = document.getElementById('rsvpForm');
         const messaggioSuccesso = document.getElementById('messaggio-successo');
@@ -177,22 +246,24 @@
                 .then(response => {
                     messaggioSuccesso.style.display = 'block';
                     form.reset();
-                    btnSubmit.innerText = 'Invia Conferma';
+                    btnSubmit.innerText = 'Invia Conferma Completa';
                     btnSubmit.disabled = false;
+                    // Ritorna alla prima schermata dopo l'invio
+                    cambiaScheda('sezione-partecipazione'); 
                 })
                 .catch(error => {
                     alert("C'è stato un errore, riprova!");
-                    btnSubmit.innerText = 'Invia Conferma';
+                    btnSubmit.innerText = 'Invia Conferma Completa';
                     btnSubmit.disabled = false;
                 });
         });
 
-        // --- LOGICA SLIDESHOW CORRETTA E PRESERVATA ---
+        // --- LOGICA FOTO SLIDESHOW (CON 'CONTAIN') ---
         window.onload = function() {
             const slides = document.querySelectorAll('.foto-slideshow-sopra div');
             if(slides.length > 0) {
                 let currentSlide = 0;
-                slides[0].style.opacity = 1; // Forza la prima slide a essere visibile subito
+                slides[0].style.opacity = 1;
                 
                 setInterval(() => {
                     slides[currentSlide].style.opacity = 0;
