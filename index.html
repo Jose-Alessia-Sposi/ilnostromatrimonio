@@ -3,264 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Il Nostro Matrimonio - Jose & Alessia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    <title>Il Nostro Matrimonio - Josè & Alessia</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Pinyon+Script&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- STILE GENERALE E PALETTE AUTUNNALE --- */
-        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4e342e; background-color: #fdfdf0; overflow-x: hidden; }
-        
-        /* --- NUOVA BARRA SUPERIORE (HEADER) FIX OVERLAP --- */
+        /* --- STILE GENERALE E SCORRIMENTO --- */
+        html { scroll-behavior: smooth; }
+        body, html { 
+            margin: 0; 
+            background-image: url('immagine2.JPG');
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            background-repeat: no-repeat; 
+            font-family: 'Montserrat', sans-serif; 
+            color: #8c5e3c; 
+            overflow-x: hidden; 
+        }
+
+        /* --- DECORAZIONI FLOREALI --- */
+        .decorazione-floreale {
+            position: fixed; font-size: 70px; opacity: 0.15; z-index: 0;
+            pointer-events: none; user-select: none; line-height: 1.1;
+        }
+        .fiori-sinistra { top: 15%; left: -15px; transform: rotate(15deg); }
+        .fiori-sinistra::after { content: "🥀\A 🍂"; white-space: pre; }
+        .fiori-destra { bottom: 10%; right: -10px; transform: rotate(-20deg); text-align: right; }
+        .fiori-destra::after { content: "🍁\A 🌾"; white-space: pre; }
+
+        /* --- HEADER --- */
         .top-header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 60px;
-            background-color: #fdfdf0; /* Sfondo Crema */
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            box-shadow: 0 2px 10px rgba(78,52,46,0.1); /* Ombra leggera */
-            z-index: 1000; /* Sta sempre sopra a tutto il resto */
-            justify-content: space-between;
+            position: fixed; top: 0; left: 0; right: 0; height: 60px; 
+            background-color: rgba(255, 255, 255, 0.95); display: flex; align-items: center; padding: 0 15px; 
+            box-shadow: 0 2px 15px rgba(139, 94, 60, 0.08); z-index: 1000; justify-content: space-between; 
         }
+        .titolo-header { font-size: 22px; color: #b88a44; margin-left: 10px; font-family: 'Pinyon Script', cursive; }
+        .menu-btn { font-size: 14px; cursor: pointer; background: transparent; color: #b88a44; padding: 8px 15px; border: 1px solid #b88a44; border-radius: 20px; font-family: 'Cinzel', serif; font-weight: bold; transition: 0.3s; }
+        .menu-btn:hover { background-color: #b88a44; color: white; }
 
-        .titolo-header { font-size: 20px; font-weight: bold; color: #c98a7a; margin-left: 10px; }
-
-        .menu-btn { 
-            font-size: 20px; 
-            cursor: pointer; 
-            background-color: #e8dcca; 
-            color: #4e342e; 
-            padding: 8px 15px; 
-            border: none;
-            border-radius: 6px; 
-            font-weight: bold;
-            transition: 0.3s;
+        /* --- MENU LATERALE --- */
+        .sidebar {
+            height: 100%; width: 260px; position: fixed; z-index: 2000; top: 0; left: -260px;
+            background-color: #ffffff; overflow-x: hidden; transition: 0.4s ease; padding-top: 60px;
+            box-shadow: 2px 0 15px rgba(0,0,0,0.05); 
         }
-        .menu-btn:hover { background-color: #c98a7a; color: white; }
+        .sidebar.aperto { left: 0; }
+        .sidebar a { padding: 15px 25px; text-decoration: none; font-size: 14px; color: #8c5e3c; display: block; transition: 0.3s; font-family: 'Cinzel', serif; letter-spacing: 1px; }
+        .sidebar a:hover { background-color: #fdfbf7; color: #b88a44; }
+        .sidebar .chiudi-btn { position: absolute; top: 10px; right: 20px; font-size: 30px; padding: 0; color: #b88a44; font-family: sans-serif; }
+        .titolo-menu { padding: 10px 25px; font-size: 11px; color: #d4a373; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; }
 
         /* --- CONTENITORE PRINCIPALE --- */
-        .container { 
-            width: 100%; 
-            min-height: 100vh; 
-            margin: 0; 
-            padding: 80px 20px 40px 20px; /* 80px in alto per non finire sotto l'header */
-            box-sizing: border-box; 
-            background: #ffffff; 
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
+        .container { width: 100%; margin: 0; padding-top: 60px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 10; }
+        .contenuto-centrale { width: 100%; max-width: 550px; display: flex; flex-direction: column; align-items: center; padding: 0 20px; box-sizing: border-box; }
+
+        /* --- STILE BIGLIETTO --- */
+        .card-stock-column {
+            width: 100%; background-color: #ffffff; border-radius: 20px; box-shadow: 0 8px 25px rgba(139, 94, 60, 0.08); 
+            margin-bottom: 40px; padding: 40px 25px; box-sizing: border-box; position: relative; overflow: hidden; 
+        }
+        .card-stock-column::before {
+            content: ""; position: absolute; top: -60px; right: -60px; width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(245, 214, 208, 0.7) 0%, rgba(255,255,255,0) 70%); filter: blur(25px); z-index: 0; pointer-events: none;
+        }
+        .card-stock-column::after {
+            content: ""; position: absolute; bottom: -80px; left: -80px; width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(242, 228, 195, 0.6) 0%, rgba(255,255,255,0) 70%); filter: blur(30px); z-index: 0; pointer-events: none;
+        }
+        .card-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+
+        /* --- STILE TESTI --- */
+        .pre-titolo { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px; color: #b88a44; text-transform: uppercase; margin-bottom: -15px; }
+        h1 { color: #b88a44; text-align: center; margin-top: 20px; font-size: 55px; font-family: 'Pinyon Script', cursive; font-weight: normal; margin-bottom: 10px; line-height: 0.9; }
+        h1 span { display: block; font-size: 35px; color: #e07a5f; margin: 5px 0; } 
+        h2 { font-family: 'Cinzel', serif; color: #b88a44; font-size: 18px; letter-spacing: 2px; text-transform: uppercase; text-align: center; margin-bottom: 25px; }
+        p { text-align: center; margin-bottom: 20px; color: #8c5e3c; line-height: 1.8; font-size: 14px; }
+        strong { font-weight: 500; font-family: 'Cinzel', serif; color: #b88a44; font-size: 16px; letter-spacing: 1px; display: block; margin-top: 10px; }
+        .separatore { width: 50px; border-top: 1px solid #d4a373; margin: 20px auto; }
+
+        /* --- STILE SLIDESHOW CON CORNICE A CUORE --- */
+        .foto-slideshow-sopra { 
+            width: 100%; padding-top: 100%; margin-bottom: 35px; position: relative; 
+            background-color: transparent; /* Importante per far vedere lo sfondo */
+        }
+        
+        .foto-slideshow-sopra div { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background-size: contain; /* Mostra la foto intera */
+            background-position: center; background-repeat: no-repeat; 
+            opacity: 0; transition: opacity 1.5s ease-in-out; 
         }
 
-        .contenuto-centrale {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
+        /* --- NUOVA CORNICE A FORMA DI CUORE (OVERLAY) --- */
+        .cuore-frame {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5;
+            pointer-events: none; /* Lascia cliccare attraverso la cornice */
+            
+            /* Una maschera invertita: un cuore bucato al centro, angoli trasparenti per mostrare lo sfondo */
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h24v24H0V0zm12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h24v24H0V0zm12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+            -webkit-mask-size: contain; mask-size: contain; -webkit-mask-position: center; mask-position: center; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+
+            /* Colore della cornice all'interno del buco (lo sfondo della tua pagina principale) */
+            background-color: transparent; /* Deve restare trasparente per mostrare lo sfondo */
         }
-
-        /* --- MENU LATERALE A SCOMPARSA (SIDEBAR) --- */
-        .sidebar {
-            height: 100%; 
-            width: 250px; 
-            position: fixed; 
-            z-index: 2000; 
-            top: 0; 
-            left: -250px; 
-            background-color: #fdfdf0; 
-            overflow-x: hidden; 
-            transition: 0.4s ease; 
-            padding-top: 60px;
-            box-shadow: 2px 0 10px rgba(78,52,46,0.2);
-            border-right: 2px solid #c98a7a;
-        }
-
-        .sidebar.aperto { left: 0; }
-
-        .sidebar a {
-            padding: 15px 25px; 
-            text-decoration: none; 
-            font-size: 16px; 
-            color: #4e342e; 
-            display: block; 
-            transition: 0.3s;
-            font-weight: 500;
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 0.5px;
-        }
-        .sidebar a:hover { background-color: #e8dcca; color: #c98a7a; }
-
-        .sidebar .chiudi-btn { position: absolute; top: 10px; right: 20px; font-size: 36px; padding: 0; }
-        .titolo-menu { padding: 10px 25px; font-size: 13px; color: #c98a7a; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; }
-
-        /* --- STILE FOTO E TESTI --- */
-        .foto-slideshow-sopra {
-            width: 100%;
-            padding-top: 75%; /* Proporzioni 4:3 */
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(78,52,46,0.1); 
-            background-color: #fdfdf0; 
-        }
-
-        .foto-slideshow-sopra div {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: contain; /* Foto mai tagliata */
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0; 
-            transition: opacity 1.5s ease-in-out; 
-        }
-
-        h1 { 
-            color: #c98a7a; /* Colore Terracotta */ 
-            text-align: center; 
-            margin-top: 0; 
-            font-size: 42px; /* Ingrandiamo un po' perché il corsivo veste piccolo */
-            font-family: 'Dancing Script', cursive; /* ECCO IL NUOVO FONT ELEGANTE! */
-            font-weight: 700; /* Lo rende un po' più in grassetto */
-        }
-        p { text-align: center; margin-bottom: 20px; color: #5d4037; line-height: 1.5; }
-
-        /* --- GESTIONE PAGINE (SEZIONI) --- */
-        .sezione-pagina { display: none; width: 100%; animation: fadeIn 0.4s; } 
-        .sezione-pagina.attiva { display: block; } 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- STILE FORM --- */
-        form { text-align: left; width: 100%; }
-        label { font-weight: bold; margin-bottom: 5px; color: #4e342e; display: block; margin-top: 15px;}
-        input, select, textarea { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; width: 100%; box-sizing: border-box; background-color: #fff; color: #4e342e; }
-        
-        .bottoni-azione { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; }
-        button.btn-azione { padding: 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; transition: 0.3s; }
-        .btn-primario { background-color: #c98a7a; color: white; }
-        .btn-primario:hover { background-color: #b07464; }
-        .btn-secondario { background-color: #e8dcca; color: #4e342e; }
-        
-        #messaggio-successo { display: none; margin-top: 20px; padding: 15px; background-color: #d8c2b5; color: #5d4037; border-radius: 6px; font-weight: bold; text-align: center; }
+        form { text-align: left; width: 100%; margin-top: 20px; }
+        label { font-size: 12px; font-family: 'Cinzel', serif; letter-spacing: 1px; color: #b88a44; display: block; margin-top: 15px; margin-bottom: 5px; text-transform: uppercase; }
+        input, select, textarea { padding: 12px 15px; border: 1px solid #eaddd3; border-radius: 8px; font-family: 'Montserrat', sans-serif; width: 100%; box-sizing: border-box; background-color: #fdfbf7; color: #8c5e3c; font-size: 14px; outline: none; transition: 0.3s; }
+        input:focus, select:focus, textarea:focus { border-color: #b88a44; box-shadow: 0 0 5px rgba(184, 138, 68, 0.2); }
+        .bottoni-azione { display: flex; flex-direction: column; gap: 12px; margin-top: 30px; width: 100%; }
+        button.btn-azione, .btn-link { padding: 15px; border: none; border-radius: 30px; cursor: pointer; font-size: 13px; width: 100%; transition: 0.3s; text-align: center; text-decoration: none; display: inline-block; box-sizing: border-box; font-family: 'Cinzel', serif; letter-spacing: 2px; text-transform: uppercase; }
+        .btn-primario { background-color: #b88a44; color: white; box-shadow: 0 4px 10px rgba(184, 138, 68, 0.3); }
+        .btn-primario:hover { background-color: #a37633; transform: translateY(-2px); }
+        .btn-secondario { background-color: transparent; color: #8c5e3c; border: 1px solid #d4a373; }
+        .btn-secondario:hover { background-color: #fdfbf7; }
+        #messaggio-successo { display: none; margin-top: 20px; padding: 20px; background-color: #f4eee1; color: #8c5e3c; border-radius: 8px; text-align: center; font-family: 'Cinzel', serif; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
+    <div class="decorazione-floreale fiori-sinistra"></div>
+    <div class="decorazione-floreale fiori-destra"></div>
+
     <div class="top-header">
-        <button class="menu-btn" onclick="apriMenu()">&#9776; Menu</button>
-        <div class="titolo-header">&hearts; 11 Ottobre 2026 &hearts;</div>
+        <button class="menu-btn" onclick="apriMenu()">Menu</button>
+        <div class="titolo-header">11 Ottobre 2026</div>
     </div>
 
     <div id="mioMenu" class="sidebar">
         <a href="javascript:void(0)" class="chiudi-btn" onclick="chiudiMenu()">&times;</a>
-        
-        <a href="#" onclick="cambiaPagina('pagina-home')">&hearts; Home</a>
-        
-        <div class="titolo-menu">Modulo Conferma</div>
-        <a href="#" onclick="cambiaPagina('pagina-partecipazione')">1. Partecipazione</a>
-        <a href="#" onclick="cambiaPagina('pagina-adulti')">2. Adulti</a>
-        <a href="#" onclick="cambiaPagina('pagina-bambini')">3. Bambini</a>
-        <a href="#" onclick="cambiaPagina('pagina-allergie')">4. Allergie</a>
-        
-        <hr style="border-top: 1px solid #d8c2b5; margin: 15px 20px;">
-        
-        <div class="titolo-menu">Altre Informazioni</div>
-        <a href="#" onclick="cambiaPagina('pagina-location')"> La Location</a>
-        <a href="#" onclick="cambiaPagina('pagina-regalo')"> Lista Nozze</a>
+        <a href="#pagina-home" onclick="chiudiMenu()">Home</a>
+        <a href="#pagina-location" onclick="chiudiMenu()">La Location</a>
+        <div class="titolo-menu">RSVP</div>
+        <a href="#pagina-rsvp" onclick="chiudiMenu()">Conferma Presenza</a>
+        <hr style="border-top: 1px solid #eaddd3; margin: 15px 20px;">
+        <div class="titolo-menu">Info & Foto</div>
+        <a href="#pagina-foto" onclick="chiudiMenu()">📸 Condividi Foto</a>
+        <a href="#pagina-regalo" onclick="chiudiMenu()">🎁 Lista Nozze</a>
     </div>
 
     <div class="container">
         <div class="contenuto-centrale">
 
-            <div id="pagina-home" class="sezione-pagina attiva">
-                
-                <div class="foto-slideshow-sopra">
-                    <div style="background-image: url('Foto1.jpeg');"></div>
-                    <div style="background-image: url('Foto2.jpeg');"></div>
+            <div id="pagina-home" class="sezione-pagina">
+                <div class="card-stock-column">
+                    <div class="card-content">
+                        <div class="foto-slideshow-sopra">
+                            <div style="background-image: url('Foto1.jpeg');"></div>
+                            <div style="background-image: url('Foto2.jpeg');"></div>
+                            <div style="background-image: url('Foto3.jpeg');"></div>
+                            <div style="background-image: url('Foto4.jpeg');"></div>
+                            <div style="background-image: url('Foto5.jpeg');"></div>
+                            <div style="background-image: url('Foto6.jpeg');"></div>
+                            
+                            <div class="cuore-frame"></div>
+                        </div>
+                        <p class="pre-titolo">Con immensa Gioia</p>
+                        <h1>Alessia Geppa <span>&</span> Jose Giovannoni</h1>
+                        <div class="separatore"></div>
+                        <p style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px;">Annunciano il loro matrimonio</p>
+                        <br>
+                        <a href="#pagina-rsvp" class="btn-azione btn-primario">Conferma Presenza</a>
+                    </div>
                 </div>
-
-                <h1>Jose & Alessia</h1>
-                <p>Siamo felicissimi di invitarvi a celebrare con noi il giorno del nostro matrimonio! <br><br> In questo sito troverete tutte le informazioni necessarie.</p>
-                
-                <button class="btn-azione btn-primario" onclick="cambiaPagina('pagina-partecipazione')">Conferma la tua presenza</button>
             </div>
 
-
-            <form id="rsvpForm">
-                
-                <div id="pagina-partecipazione" class="sezione-pagina">
-                    <h1>Partecipazione</h1>
-                    <p>Compila i campi qui sotto per farci sapere se ci sarai.</p>
-                    
-                    <label for="nome">Nome e Cognome:</label>
-                    <input type="text" id="nome" name="Nome" required placeholder="Es. Mario Rossi">
-
-                    <label for="presenza">Potrete partecipare?</label>
-                    <select id="presenza" name="Presenza" required>
-                        <option value="" disabled selected>Scegli un'opzione...</option>
-                        <option value="Sì">Sì, festeggeremo con voi!</option>
-                        <option value="No">No, purtroppo non potremo esserci</option>
-                    </select>
-
-                    <div class="bottoni-azione">
-                        <button type="button" class="btn-azione btn-secondario" onclick="cambiaPagina('pagina-adulti')">Avanti ➔</button>
-                    </div>
-                </div>
-
-                <div id="pagina-adulti" class="sezione-pagina">
-                    <h1>Adulti</h1>
-                    <label for="adulti">Quanti adulti sarete in totale?</label>
-                    <input type="number" id="adulti" name="Adulti" min="1" value="1">
-                    <p style="font-size: 12px; text-align: left;">Indica il numero totale di adulti (compreso te).</p>
-                    
-                    <div class="bottoni-azione">
-                        <button type="button" class="btn-azione btn-secondario" onclick="cambiaPagina('pagina-bambini')">Avanti ➔</button>
-                    </div>
-                </div>
-
-                <div id="pagina-bambini" class="sezione-pagina">
-                    <h1>Bambini</h1>
-                    <label for="bambini">Quanti bambini (sotto i 12 anni)?</label>
-                    <input type="number" id="bambini" name="Numero_Bambini" min="0" value="0">
-
-                    <div class="bottoni-azione">
-                        <button type="button" class="btn-azione btn-secondario" onclick="cambiaPagina('pagina-allergie')">Avanti ➔</button>
-                    </div>
-                </div>
-
-                <div id="pagina-allergie" class="sezione-pagina">
-                    <h1>Allergie</h1>
-                    <label for="allergie">Intolleranze:</label>
-                    <textarea id="allergie" name="Allergie" rows="3" placeholder="Es. Celiachia, vegano..."></textarea>
-
-                    <div class="bottoni-azione">
-                        <button type="submit" id="btnSubmit" class="btn-azione btn-primario">Invia Conferma Definitiva</button>
-                    </div>
-                </div>
-
-            </form>
-
-            <div id="messaggio-successo">Grazie! La tua conferma è stata registrata.</div>
-
-
             <div id="pagina-location" class="sezione-pagina">
-                <h1>La Location</h1>
-                <p>Non vediamo l'ora di festeggiare con voi presso il meraviglioso <strong>Antico Casale dei Mascioni</strong>.</p>
-                
-                <div style="width: 100%; padding-top: 56.25%; background-color: #e8dcca; border-radius: 8px; margin-bottom: 20px; background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=500'); background-size: cover; background-position: center;"></div>
+                <div class="card-stock-column">
+                    <div class="card-content">
+                        <h2>Gli Sposi</h2>
+                        <p style="text-transform: uppercase; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 1px;">Al termine della cerimonia<br>saranno lieti di avervi ospiti<br>presso</p>
+                        <h1>Casale dei Mascioni</h1>
+                        <p style="font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; color: #b88a44;">Via Mascioni,<br>81010 Squille di Castel Campagnano (CE) Italy</p>
+                        
+                        <div class="bottoni-azione">
+                            <a href="https://casaledeimascioni.it/la-location/" target="_blank" class="btn-link btn-secondario">Sito Web</a>
+                            <a href="https://casaledeimascioni.it/contatti/" target="_blank" class="btn-link btn-primario">Ottieni Indicazioni</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                <p style="font-size: 14px;">Via Mascioni, Castel Campagnano (CE)</p>
+            <div id="pagina-rsvp" class="sezione-pagina">
+                <div class="card-stock-column">
+                    <div class="card-content">
+                        <h2>Partecipazione</h2>
+                        <p>Vi preghiamo di confermare la vostra presenza compilando il modulo</p>
+                        
+                        <form id="rsvpForm">
+                            <label for="nome">Nome e Cognome</label>
+                            <input type="text" id="nome" name="Nome" required placeholder="Inserisci il tuo nome">
 
-                <div class="bottoni-azione">
-                    <a href="https://casaledeimascioni.it/la-location/" target="_blank" style="text-decoration: none;">
-                        <button type="button" class="btn-azione btn-secondario">Visita il sito della Location ➔</button>
-                    </a>
+                            <label for="presenza">Potrai partecipare?</label>
+                            <select id="presenza" name="Presenza" required>
+                                <option value="" disabled selected>Seleziona un'opzione</option>
+                                <option value="Sì">Con immensa gioia, sì</option>
+                                <option value="No">Purtroppo non potremo esserci</option>
+                            </select>
+
+                            <label for="adulti">Numero adulti</label>
+                            <input type="number" id="adulti" name="Adulti" min="1" value="1">
+                            
+                            <label for="bambini">Bambini (sotto i 12 anni)</label>
+                            <input type="number" id="bambini" name="Numero_Bambini" min="0" value="0">
+
+                            <label for="allergie">Intolleranze / Allergie</label>
+                            <textarea id="allergie" name="Allergie" rows="3" placeholder="Eventuali note alimentari..."></textarea>
+
+                            <div class="bottoni-azione">
+                                <button type="submit" id="btnSubmit" class="btn-azione btn-primario">Invia Conferma</button>
+                                <button type="reset" id="btnClear" class="btn-azione btn-secondario">Svuota Modulo</button>
+                            </div>
+                        </form>
+                        <div id="messaggio-successo">Grazie! La vostra conferma è stata ricevuta.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pagina-foto" class="sezione-pagina">
+                <div class="card-stock-column">
+                    <div class="card-content">
+                        <h2>Cattura i Ricordi</h2>
+                        <p style="margin-bottom: 5px;">Aiutateci a raccogliere i momenti più belli della giornata!</p>
+                        <p>Cliccate qui sotto per caricare le foto e i video che scatterete durante la festa.</p>
+                        
+                        <div class="bottoni-azione" style="margin-top: 15px;">
+                            <a href="https://photos.app.goo.gl/jpRPPnC3NG6MExiw8" target="_blank" class="btn-link btn-primario">📸 Condividi le tue Foto</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div id="pagina-regalo" class="sezione-pagina">
-                <h1>Lista Nozze</h1>
-                <p>Il regalo più grande è la vostra presenza. Tuttavia, se desiderate farci un pensiero...</p>
-                <p><strong>IBAN:</strong> IT12A345678901234567890</p>
+                <div class="card-stock-column">
+                    <div class="card-content">
+                        <h2>Lista Nozze</h2>
+                        <p>Il regalo più grande è la vostra presenza.<br>Tuttavia, se desiderate farci un pensiero...</p>
+                        <strong>IBAN</strong>
+                        <p style="font-family: monospace; font-size: 16px;">IT12A345678901234567890</p>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -271,63 +256,23 @@
         function apriMenu() { document.getElementById("mioMenu").classList.add("aperto"); }
         function chiudiMenu() { document.getElementById("mioMenu").classList.remove("aperto"); }
 
-        // --- LOGICA CAMBIO PAGINE ---
-        function cambiaPagina(idPagina) {
-            // 1. Nasconde tutte le pagine
-            document.querySelectorAll('.sezione-pagina').forEach(pagina => {
-                pagina.classList.remove('attiva');
-            });
-            // 2. Mostra la pagina richiesta
-            document.getElementById(idPagina).classList.add('attiva');
-            // 3. Nasconde il messaggio di successo se si naviga via
-            document.getElementById('messaggio-successo').style.display = 'none';
-            // 4. Chiude il menu laterale in automatico
-            chiudiMenu();
-            // 5. Riporta la visuale in cima alla pagina
-            window.scrollTo(0, 0);
+        // --- LOGICA SLIDESHOW FOTO (CUORE) ---
+        // Seleziona solo i div che contengono le foto (esclude .cuore-frame)
+        const fotoSlideshow = document.querySelectorAll('.foto-slideshow-sopra div:not(.cuore-frame)');
+        let indiceFotoAttuale = 0;
+
+        if (fotoSlideshow.length > 0) {
+            fotoSlideshow[0].style.opacity = 1;
+            setInterval(() => {
+                fotoSlideshow[indiceFotoAttuale].style.opacity = 0;
+                indiceFotoAttuale = (indiceFotoAttuale + 1) % fotoSlideshow.length;
+                fotoSlideshow[indiceFotoAttuale].style.opacity = 1;
+            }, 3000); 
         }
 
         // --- LOGICA INVIO GOOGLE FOGLI ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbx1Vpd07wUeac1QuflbkhRl39eiQv1fEIEZLzeoF_EC1n7F3zNTHhMzRNeZDawbDG3Fow/exec';
         const form = document.getElementById('rsvpForm');
-        const messaggioSuccesso = document.getElementById('messaggio-successo');
-        const btnSubmit = document.getElementById('btnSubmit');
-
-        form.addEventListener('submit', e => {
-            e.preventDefault(); 
-            btnSubmit.innerText = 'Invio in corso...';
-            btnSubmit.disabled = true;
-
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                    form.reset();
-                    btnSubmit.innerText = 'Invia Conferma Definitiva';
-                    btnSubmit.disabled = false;
-                    // Mostra il messaggio di successo e nasconde il form
-                    cambiaPagina('pagina-home');
-                    messaggioSuccesso.style.display = 'block';
-                })
-                .catch(error => {
-                    alert("C'è stato un errore, riprova!");
-                    btnSubmit.innerText = 'Invia Conferma Definitiva';
-                    btnSubmit.disabled = false;
-                });
-        });
-
-        // --- LOGICA FOTO SLIDESHOW ---
-        window.onload = function() {
-            const slides = document.querySelectorAll('.foto-slideshow-sopra div');
-            if(slides.length > 0) {
-                let currentSlide = 0;
-                slides[0].style.opacity = 1;
-                setInterval(() => {
-                    slides[currentSlide].style.opacity = 0;
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    slides[currentSlide].style.opacity = 1;
-                }, 5000);
-            }
-        };
     </script>
-
 </body>
 </html>
