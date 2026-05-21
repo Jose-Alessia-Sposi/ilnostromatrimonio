@@ -271,8 +271,21 @@
         }
 
         // --- LOGICA INVIO GOOGLE FOGLI ---
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbx1Vpd07wUeac1QuflbkhRl39eiQv1fEIEZLzeoF_EC1n7F3zNTHhMzRNeZDawbDG3Fow/exec';
-        const form = document.getElementById('rsvpForm');
+       const scriptURL = 'https://script.google.com/macros/s/AKfycbx1Vpd07wUeac1QuflbkhRl39eiQv1fEIEZLzeoF_EC1n7F3zNTHhMzRNeZDawbDG3Fow/exec';
+       const form = document.getElementById('rsvpForm');
+
+       form.addEventListener('submit', e => {
+       e.preventDefault(); // Evita che la pagina si ricarichi
+    
+       // Invia i dati allo script di Google
+       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+            // Mostra il messaggio di successo e svuota il modulo
+            document.getElementById('messaggio-successo').style.display = 'block';
+            form.reset();
+        })
+        .catch(error => console.error('Errore durante l\'invio!', error.message));
+});
     </script>
 </body>
 </html>
