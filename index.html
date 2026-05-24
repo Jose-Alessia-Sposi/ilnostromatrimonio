@@ -75,8 +75,20 @@
 
         /* --- STILE TESTI --- */
         .pre-titolo { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px; color: #b88a44; text-transform: uppercase; margin-bottom: -15px; }
-        h1 { color: #b88a44; text-align: center; margin-top: 20px; font-size: 55px; font-family: 'Pinyon Script', cursive; font-weight: normal; margin-bottom: 10px; line-height: 0.9; }
-        h1 span { display: block; font-size: 35px; color: #e07a5f; margin: 5px 0; } 
+        h1 { color: #b88a44; text-align: center; margin-top: 20px; font-size: 55px; font-family: 'Pinyon Script', cursive; font-weight: normal; margin-bottom: 10px; line-height: 1.2; }
+        
+        /* --- CORREZIONE DEFINITIVA PER LA & IN CORSIVO --- */
+        h1 span { 
+            display: block; 
+            font-family: 'Pinyon Script', cursive; 
+            font-size: 55px; 
+            color: #e07a5f; 
+            line-height: normal; /* Lascia al font il suo spazio naturale */
+            padding: 30px 0; /* Aggiunge spazio fisico al contenitore per non tagliare le code alto/basso */
+            margin: -10px 0; /* Compensa il padding in eccesso per non distanziare troppo i nomi */
+            overflow: visible;
+        } 
+        
         h2 { font-family: 'Cinzel', serif; color: #b88a44; font-size: 18px; letter-spacing: 2px; text-transform: uppercase; text-align: center; margin-bottom: 25px; }
         p { text-align: center; margin-bottom: 20px; color: #8c5e3c; line-height: 1.8; font-size: 14px; }
         strong { font-weight: 500; font-family: 'Cinzel', serif; color: #b88a44; font-size: 16px; letter-spacing: 1px; display: block; margin-top: 10px; }
@@ -85,28 +97,26 @@
         /* --- STILE SLIDESHOW CON CORNICE A CUORE --- */
         .foto-slideshow-sopra { 
             width: 100%; padding-top: 100%; margin-bottom: 35px; position: relative; 
-            background-color: transparent; /* Importante per far vedere lo sfondo */
+            background-color: transparent; 
         }
         
         .foto-slideshow-sopra div { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background-size: contain; /* Mostra la foto intera */
+            background-size: contain; 
             background-position: center; background-repeat: no-repeat; 
             opacity: 0; transition: opacity 1.5s ease-in-out; 
         }
 
-        /* --- NUOVA CORNICE A FORMA DI CUORE (OVERLAY) --- */
+        /* --- CORNICE A FORMA DI CUORE (OVERLAY) --- */
         .cuore-frame {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5;
-            pointer-events: none; /* Lascia cliccare attraverso la cornice */
+            pointer-events: none; 
             
-            /* Una maschera invertita: un cuore bucato al centro, angoli trasparenti per mostrare lo sfondo */
             -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h24v24H0V0zm12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
             mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h24v24H0V0zm12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
             -webkit-mask-size: contain; mask-size: contain; -webkit-mask-position: center; mask-position: center; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
 
-            /* Colore della cornice all'interno del buco (lo sfondo della tua pagina principale) */
-            background-color: transparent; /* Deve restare trasparente per mostrare lo sfondo */
+            background-color: transparent; 
         }
 
         /* --- STILE FORM --- */
@@ -227,7 +237,7 @@
                 <div class="card-stock-column">
                     <div class="card-content">
                         <h2>Cattura i Ricordi</h2>
-                        <p style="margin-bottom: 5px;">Aiutateci a raccogliere i momenti più belli della giornata!</p>
+                        <p style="margin-bottom: 5px;">Aiutateci a raccogliere i moments più belli della giornata!</p>
                         <p>Cliccate qui sotto per caricare le foto e i video che scatterete durante la festa.</p>
                         
                         <div class="bottoni-azione" style="margin-top: 15px;">
@@ -242,8 +252,12 @@
                     <div class="card-content">
                         <h2>Lista Nozze</h2>
                         <p>Il Dono più grande sarà avervi con noi a festeggiare.<br>Se desiderate farci un regalo,<br>apprezzeremmo molto un aiuto per i nostri progetti futuri</p>
-                        <strong>IBAN</strong>
-                        <p style="font-family: monospace; font-size: 16px;">IT12A345678901234567890</p>
+                        
+                        <strong>IBAN:</strong>
+                        <p style="font-size: 16px; margin-bottom: 15px;">IT93H0200832974023266432590</p>
+                        
+                        <strong>Intestato a:</strong>
+                        <p style="font-family: monospace; font-size: 16px;">GIOVANNONI JOSE</p>
                     </div>
                 </div>
             </div>
@@ -257,7 +271,6 @@
         function chiudiMenu() { document.getElementById("mioMenu").classList.remove("aperto"); }
 
         // --- LOGICA SLIDESHOW FOTO (CUORE) ---
-        // Seleziona solo i div che contengono le foto (esclude .cuore-frame)
         const fotoSlideshow = document.querySelectorAll('.foto-slideshow-sopra div:not(.cuore-frame)');
         let indiceFotoAttuale = 0;
 
@@ -271,21 +284,19 @@
         }
 
         // --- LOGICA INVIO GOOGLE FOGLI ---
-       const scriptURL = 'https://script.google.com/macros/s/AKfycbx1Vpd07wUeac1QuflbkhRl39eiQv1fEIEZLzeoF_EC1n7F3zNTHhMzRNeZDawbDG3Fow/exec';
-       const form = document.getElementById('rsvpForm');
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbx1Vpd07wUeac1QuflbkhRl39eiQv1fEIEZLzeoF_EC1n7F3zNTHhMzRNeZDawbDG3Fow/exec';
+        const form = document.getElementById('rsvpForm');
 
-       form.addEventListener('submit', e => {
-       e.preventDefault(); // Evita che la pagina si ricarichi
-    
-       // Invia i dati allo script di Google
-       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => {
-            // Mostra il messaggio di successo e svuota il modulo
-            document.getElementById('messaggio-successo').style.display = 'block';
-            form.reset();
-        })
-        .catch(error => console.error('Errore durante l\'invio!', error.message));
-});
+        form.addEventListener('submit', e => {
+            e.preventDefault(); 
+            
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    document.getElementById('messaggio-successo').style.display = 'block';
+                    form.reset();
+                })
+                .catch(error => console.error('Errore durante l\'invio!', error.message));
+        });
     </script>
 </body>
 </html>
